@@ -1,37 +1,32 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter } from "react-router-dom"; // Import BrowserRouter
 import Navbar from "./components/Navbar";
 import TextForm from "./components/TextForm";
 import Alert from "./components/Alert";
 
 function App() {
-  const [alert, setAlert] = React.useState(null);
+  const [alert, setAlert] = useState(null);
 
   const showAlert = (message, type) => {
     setAlert({ message, type });
     setTimeout(() => {
       setAlert(null);
-    }, 2000);
+    }, 2000); // Alert disappears after 2 seconds
   };
 
   return (
-    <Router>
+    <BrowserRouter>
+      {" "}
+      {/* Wrap the entire app with BrowserRouter */}
       <Navbar title="Word Counter" />
       <Alert alert={alert} />
       <div className="container my-3">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <TextForm
-                showAlert={showAlert}
-                heading="Enter the text to analyze below"
-              />
-            }
-          />
-        </Routes>
+        <TextForm
+          showAlert={showAlert}
+          heading="Enter the text to analyze below"
+        />
       </div>
-    </Router>
+    </BrowserRouter>
   );
 }
 
