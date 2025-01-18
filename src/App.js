@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import TextForm from "./components/TextForm";
+import Alert from "./components/Alert";
 
 function App() {
+  const [alert, setAlert] = React.useState(null);
+
+  const showAlert = (message, type) => {
+    setAlert({ message, type });
+    setTimeout(() => {
+      setAlert(null);
+    }, 2000);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar title="Word Counter" />
+      <Alert alert={alert} />
+      <div className="container my-3">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <TextForm
+                showAlert={showAlert}
+                heading="Enter the text to analyze below"
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
